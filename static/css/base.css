@@ -1,0 +1,64 @@
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.navbar{
+	margin-bottom: 0px;
+	font-size: 1.5em;
+	border-radius: 0px;
+}
+
+body{
+	font-family: "Comic Sans MS", cursive, sans-serif;
+
+}
+
+.cursor {
+  animation: blinker 2s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0; }
+}
+
+#about_me{
+	background-image: url("../../images/brick.jpg");
+	color:white;
+	min-height:500px;
+	font-size: 1.5em;
+	margin:0px;
+	padding-top:100px;
+}
+
+#my_education{
+	background-image: url("../../images/education.jpg");
+	color:black;
+	min-height:500px;
+	font-size: 1.5em;
+	margin:0px;
+	padding-top:10px;
+}
+
+#edu_inst{
+	min-height: 300px;
+	background-color: yellow;
+	border:3px solid black;
+	border-radius: 10px;
+	cursor:pointer;
+}
+
+@keyframes shake_inst {
+    0%   {-webkit-transform:rotate(0deg);}
+    15%  {-webkit-transform:rotate(10deg);}
+    30%  {-webkit-transform:rotate(0deg);}
+    45%  {-webkit-transform:rotate(-10deg);}
+    60% {-webkit-transform:rotate(0deg);}
+    70% {-webkit-transform:rotate(5deg);}
+    80% {-webkit-transform:rotate(0deg);}
+    90% {-webkit-transform:rotate(-5deg);}
+    100% {-webkit-transform:rotate(0deg);}
+}
+
+#edu_inst:hover{
+	-webkit-animation: shake_inst 1s linear 0s  alternate;
+}

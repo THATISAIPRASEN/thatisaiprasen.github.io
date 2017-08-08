@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sai Prasen</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="./static/css/base.css">
+<script type="text/javascript" src="./static/js/base.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Sai Prasen</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="{%block home_active%}{%endblock%}"><a href="{% url 'home:home' %}">Home Page</a></li>
+        <li class="{%block issues_active%}{%endblock%}"><a href="{% url 'home:issues' %}">Issue a Book</a></li>
+        <li class="{%block returns_active%}{%endblock%}"><a href="{% url 'home:returns' %}">Return a Book</a></li>
+        <li class="{%block renewals_active%}{%endblock%}"><a href="{% url 'home:renewals' %}">Renewal a Book</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{%url 'home:logout'%}"> Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!--
+<div class="col-sm-12 col-md-12 col-xs-12">
+	<h1 style="color: #14a212;" align="center">
+	<span  class="typewrite" data-period="2000" data-type='[ "Hello Friends..!!!", "Welcome To My Website..!!!", "Here is My Profile."]'>
+  </span>
+  <span class="cursor">|</span>
+	</h1>
+</div>
+-->
+<div class="col-sm-12 col-md-12 col-xs-12" id="about_me">
+	<u><h1 style="color: #37da19;">About Me:</h1></u><br>
+	<span  class="typewrite" data-period="200" data-type='[ "I am Sai Prasen Thati.I am from Nalgonda district which is in Telangana State,India.<br>I am Pursuing My B.Tech in NIT Warangal. I love to develop applications mainly Web and app development.<br> I like to do hacking to make life easier.My Interests include Programming,hacking and doing projects."]'>
+  </span>
+  <span class="cursor">|</span>
+</div>
+
+<div class="col-sm-12 col-md-12 col-xs-12" id="my_education">
+	<u><h1 style="color: black;">Education:</h1></u><br>
+
+	<div id="edu_inst" class="col-sm-3">
+		
+	</div>
+
+
+	<div id="edu_inst" class="col-sm-offset-1 col-sm-3">
+		
+	</div>
+
+	<div id="edu_inst" class="col-sm-offset-1 col-sm-3">
+		
+	</div>
+	
+</div>
+
+</body>
+</html>

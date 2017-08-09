@@ -51,3 +51,33 @@ var TxtType = function(el, toRotate, period) {
  
     };
 
+$(document).ready(function(){
+	var number_of_animations = 20;
+	for (var i = 1; i <= number_of_animations; i++) {
+		var classname = "animated-";
+		classname += i.toString();
+    	animateDiv(classname);
+	}	
+    
+});
+
+function makeNewPosition(){
+    
+    // Get viewport dimensions (remove the dimension of the div)
+    var h = $(window).height() - 30;
+    var w = $(window).width() - 30;
+    
+    var nh = Math.floor(Math.random() * h);
+    var nw = Math.floor(Math.random() * w);
+    
+    return [nh,nw];    
+    
+}
+
+function animateDiv(classname){
+    var newq = makeNewPosition();
+    $("."+classname).animate({ top: newq[0], left: newq[1] },2000, function(){
+      	animateDiv(classname);      
+    });
+    
+};

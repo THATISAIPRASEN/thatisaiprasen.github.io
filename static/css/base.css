@@ -183,3 +183,29 @@ body{
 #work_place{
 	margin:20px 100px;
 }
+
+#my_projects{
+	background-image: url("../../images/projects.jpg");
+	color:black;
+	min-height:500px;
+	font-size: 1.5em;
+	padding-top:10px;
+}
+
+#project{
+	background-color: #ffc107;
+	border:3px solid black;
+	border-radius: 100px;
+	cursor: pointer;
+	margin-bottom:30px;
+	padding: 30px;
+}
+
+[class|='animated']{
+	width: 20px;
+	height:20px;
+	position:absolute;
+	border-radius: 10px;
+	z-index: 10000000;
+    
+}

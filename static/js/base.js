@@ -64,8 +64,8 @@ $(document).ready(function(){
 function makeNewPosition(){
     
     // Get viewport dimensions (remove the dimension of the div)
-    var h = $(window).height() - 30;
-    var w = $(window).width() - 30;
+    var h = $(window).height() - 100;
+    var w = $(window).width() - 100;
     
     var nh = Math.floor(Math.random() * h);
     var nw = Math.floor(Math.random() * w);

@@ -27,7 +27,7 @@ body{
 	min-height:500px;
 	font-size: 1.5em;
 	margin:0px;
-	padding-top:100px;
+	padding-top:10px;
 }
 
 #my_education{
@@ -45,6 +45,7 @@ body{
 	border:3px solid black;
 	border-radius: 10px;
 	cursor:pointer;
+	padding:15px;
 }
 
 @keyframes shake_inst {
@@ -61,4 +62,124 @@ body{
 
 #edu_inst:hover{
 	-webkit-animation: shake_inst 1s linear 0s  alternate;
+}
+
+#tech_skills{
+	background-image: url("../../images/skills.jpg");
+	color:white;
+	min-height:500px;
+	font-size: 1.5em;
+	margin:0px;
+	padding-top:50px;
+}
+
+[id|='skill']{
+	border:3px solid black;
+	background-color: green;
+	border-radius: 30px;
+	padding:5px 10px;
+	height:50px;
+	margin-top:20px;
+}
+
+@keyframes shake_skill1{
+	0%   {top:0px;}
+    20%  {top:0px;}
+    25%  {top:70px;}
+    45%  {top:70px;}
+    50%   {top:140px;}
+    70%  {top:140px;}
+    75%  {top:210px;}
+    95%  {top:210px;}
+    100% {top:0px;}
+}
+
+#skill-1{
+	-webkit-animation: shake_skill1 4s linear infinite;
+}
+
+@keyframes shake_skill2{
+	0%   {top:0px;}
+    20%  {top:0px;}
+    25%  {top:-70px;}
+    45%  {top:-70px;}
+    50%   {top:140px;}
+    70%  {top:140px;}
+    75%  {top:70px;}
+    95%  {top:70px;}
+    100% {top:0px;}
+}
+
+#skill-2{
+	-webkit-animation: shake_skill2 4s linear infinite;
+}
+
+@keyframes shake_skill3{
+	0%   {top:0px;}
+    20%  {top:0px;}
+    25%  {top:70px;}
+    45%  {top:70px;}
+    50%   {top:-140px;}
+    70%  {top:-140px;}
+    75%  {top:-70px;}
+    95%  {top:-70px;}
+    100% {top:0px;}
+}
+
+#skill-3{
+	-webkit-animation: shake_skill3 4s linear infinite;
+}
+
+@keyframes shake_skill4{
+	0%   {top:0px;}
+    20%  {top:0px;}
+    25%  {top:-70px;}
+    45%  {top:-70px;}
+    50%   {top:-140px;}
+    70%  {top:-140px;}
+    75%  {top:-210px;}
+    95%  {top:-210px;}
+    100% {top:0px;}
+}
+
+#skill-4{
+	-webkit-animation: shake_skill4 4s linear infinite;
+}
+
+#contact_me{
+	background-image: url("../../images/contact.jpg");
+	color:black;
+	min-height:500px;
+	font-size: 1.5em;
+	margin:0px;
+	padding-top:10px;
+}
+
+#topad{
+ 	display: none;
+ 	position: fixed;
+ 	bottom:50px;
+ 	right:50px;
+ 	border: 3px solid black;
+ 	background-color: skyblue;
+ 	width:50px;
+ 	padding: 10px;
+ 	color: black;
+ 	font-size: 1.3em;
+ 	border-radius: 50px;
+ 	z-index:100000;
+ 	cursor: pointer;
+ }
+
+ #worked_places{
+	background-image: url("../../images/work.jpg");
+	color:black;
+	min-height:500px;
+	font-size: 1.5em;
+	margin:0px;
+	padding-top:10px;
+}
+
+#work_place{
+	margin:20px 100px;
 }

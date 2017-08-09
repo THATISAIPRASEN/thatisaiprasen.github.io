@@ -2,13 +2,17 @@
 <html>
 <head>
 	<title>Sai Prasen</title>
-<<<<<<< HEAD
+	<link rel="shortcut icon" href="./images/myimage.jpg" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Satisfy' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="./static/css/base.css">
 <script type="text/javascript" src="./static/js/base.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript">
+
+</script>
 </head>
 <body>
 
@@ -24,13 +28,12 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="{%block home_active%}{%endblock%}"><a href="{% url 'home:home' %}">Home Page</a></li>
-        <li class="{%block issues_active%}{%endblock%}"><a href="{% url 'home:issues' %}">Issue a Book</a></li>
-        <li class="{%block returns_active%}{%endblock%}"><a href="{% url 'home:returns' %}">Return a Book</a></li>
-        <li class="{%block renewals_active%}{%endblock%}"><a href="{% url 'home:renewals' %}">Renewal a Book</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="{%url 'home:logout'%}"> Logout</a></li>
+        <li><a href="#about_me">About Me</a></li>
+        <li><a href="#my_education">My Education</a></li>
+        <li><a href="#tech_skills">Technical Skills</a></li>
+        <li><a href="#worked_places">Places Worked</a></li>
+        <li><a href="#my_projects">My Projects</a></li>
+        <li><a href="#contact_me">Contact Me</a></li>
       </ul>
     </div>
   </div>
@@ -44,9 +47,17 @@
 	</h1>
 </div>
 -->
+
+
+
 <div class="col-sm-12 col-md-12 col-xs-12" id="about_me">
+
+<div class="col-sm-12">
+	<img src="./images/myimage.jpg" height="200px" width="200px" style="border:3px solid black;float: left;margin: 10px;" />
+	<h1 align="center">Thati Sai Prasen</h1>
+</div>
 	<u><h1 style="color: #37da19;">About Me:</h1></u><br>
-	<span  class="typewrite" data-period="200" data-type='[ "I am Sai Prasen Thati.I am from Nalgonda district which is in Telangana State,India.<br>I am Pursuing My B.Tech in NIT Warangal. I love to develop applications mainly Web and app development.<br> I like to do hacking to make life easier.My Interests include Programming,hacking and doing projects."]'>
+	<span  class="typewrite" data-period="200" data-type='[ "I am Sai Prasen Thati.I am from Nalgonda district which is in Telangana State,India.<br>I am Pursuing My B.Tech in NIT Warangal. I love to develop applications mainly Web and app development.<br> I like to do hacking to make life easier.My Interests include Programming,hacking and doing projects.<br> Contact me for discussion of any projects or ideas"]'>
   </span>
   <span class="cursor">|</span>
 </div>
@@ -55,26 +66,184 @@
 	<u><h1 style="color: black;">Education:</h1></u><br>
 
 	<div id="edu_inst" class="col-sm-3">
-		
+		<h3 align="center" style="color:green;">National Institute Of Technology, Warangal(NITW)</h3>
+		(Deemed)
+		<br>
+		2015-Present (B.Tech)
+		<br>
+		Computer Science and Engineering (C.S.E)
+		<br>
+		8.46 cgpa
 	</div>
 
 
 	<div id="edu_inst" class="col-sm-offset-1 col-sm-3">
-		
+		<h3 align="center" style="color:green;">Narayana Junior College</h3>
+		(Telangana State Board)
+		<br>
+		2013-2015 (Intermediate)
+		<br>
+		M.P.C
+		<br>
+		982/1000
 	</div>
 
 	<div id="edu_inst" class="col-sm-offset-1 col-sm-3">
-		
+		<h3 align="center" style="color:green;">Jawahar Navodaya Vidyalaya,Nalgonda (JNVCC)</h3>
+		(C.B.S.E)
+		<br>
+		2008-2013
+		<br>
+		Schooling
+		<br>
+		10.0 cgpa
 	</div>
 	
 </div>
 
+<div class="col-sm-12 col-md-12 col-xs-12" id="tech_skills">
+	<u><h1 style="color: #fbff00;">Technical Skills:</h1></u><br>
+	I am comfortable with the following languages and frameworks
+	<br><br>
+
+	<div id="skill-1" class="col-sm-offset-2 col-sm-8" align="center">
+		C++ , Java , MySql , C#
+	</div>
+
+	<div id="skill-2" class="col-sm-offset-2 col-sm-8" align="center">
+		HTML , CSS , Javascript , jQuery , Ajax
+	</div>
+
+	<div id="skill-3" class="col-sm-offset-2 col-sm-8" align="center">
+		Bootstrap , Angular Js , PHP , Python
+	</div>
+
+	<div id="skill-4" class="col-sm-offset-2 col-sm-8" align="center">
+		Unity , Eclipse , Codeigniter , Django
+	</div>
+
+	<div class="clearfix"></div>
+
+	<br><br>
+	&nbsp;&nbsp;I worked on : 
+	<span  class="typewrite" style="color:#e5ff0b;" data-period="800" data-type='[ "Codeigniter","Java","MySql","HTML","Javascript","Ajax","PHP","Python","Angular Js","C++","Bootstrap","jQuery","Django","Eclipse","C#","CSS","Unity"]'>
+  </span>
+  <span class="cursor">|</span>
+  <br><br>
+</div>
+
+
+<div class="col-sm-12 col-md-12 col-xs-12" id="worked_places">
+
+	<u><h1 style="color: black;">Places I have Worked :</h1></u><br>
+
+	<div id="work_place" class=" col-sm-4">
+		<img src="./images/wsdc_logo.png" height="100px" width="300px" />
+	</div>
+
+	<div id="work_place" class="col-sm-4">
+		<img src="./images/nitw_logo.png" height="200px" width="200px" />
+	</div>
+
+	<br>
+
+	<div id="future_work">
+		<h2 align="center">This summer i will work in: </h2>
+		<img src="./images/microsoft_logo.png" height="150px" width="500px" class="col-sm-offset-4 col-sm-6" style="margin:20px 50px" />
+	</div>
+	
+</div>
+
+
+
+
+<div class="col-sm-12 col-md-12 col-xs-12" id="contact_me">
+	<u><h1 style="color: #3f51b5;">Contact Me:</h1></u><br>
+	
+	<div class="col-sm-4">
+		
+		<p>
+        <a href="tel:+919949753303" class="btn btn-info btn-lg">
+          <span class="glyphicon glyphicon-earphone"></span> Call Me
+        </a>  +919949753303
+      </p>
+
+      <p>
+        <a href="mailto:saiprasenthati@gmail.com" class="btn btn-info btn-lg" target="_blank">
+          <span class="glyphicon glyphicon-envelope"></span> Email me
+        </a>  saiprasenthati@gmail.com
+      </p>  
+
+      <p>
+        <a href="#" class="btn btn-info btn-lg" target="_blank">
+          <span class="glyphicon glyphicon-map-marker"></span> Mail me
+        </a> Room no:2545 , 1K Block <br> NIT Warangal , Telangana , India
+        <br>
+        Pincode : 506004
+      </p> 
+
+      <p>
+        <a href="#" class="btn btn-info btn-lg" target="_blank">
+          <span class="glyphicon glyphicon-home"></span> Home
+        </a> Santhosh Nagar <br> Miryalguda , Telangana , India
+        <br>
+        Pincode : 508207
+      </p>
+
+
+	</div>
+
+	<div class="col-sm-offset-2 col-sm-6">
+		
+
+      <p>
+        <a href="https://www.facebook.com/saiprasenthati" class="btn btn-info btn-lg" target="_blank">
+          <i class="fa fa-facebook-square"></i> Message me
+        </a>  https://www.facebook.com/saiprasenthati
+      </p>  
+
+      <p>
+        <a href="https://www.linkedin.com/in/saiprasenthati" class="btn btn-info btn-lg" target="_blank">
+          <i class="fa fa-linkedin-square"></i> Connect Me
+        </a>  https://www.linkedin.com/in/saiprasenthati
+      </p> 
+
+      <p>
+        <a href="https://www.quora.com/profile/Saiprasen-Thati" class="btn btn-info btn-lg" target="_blank">
+          <i class="fa fa-quora"></i> Read my Answers
+        </a>  https://www.quora.com/profile/Saiprasen-Thati
+      </p>
+
+
+	</div>
+
+</div>
+
+<div id="topad">
+	  Top
+	</div>
+
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#topad").click(function() {
+  		$("html, body").animate({ scrollTop: 0 }, "slow");
+
+	});
+
+});
+</script>
+<script type="text/javascript">
+$(document).scroll(function() {
+  var y = $(this).scrollTop();
+  if (y > 200) {
+    $('#topad').fadeIn();
+  } else {
+    $('#topad').fadeOut();
+  }
+});
+</script>
+
 </body>
 </html>
-=======
-</head>
-<body>
-Welcome to my Page
-</body>
-</html>
->>>>>>> e1d014c4bcc4ef516246d0037f0c5a8aea6a2fc4

@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sai Prasen and Thanusha//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:haldi-pellikoduku-20261114@thatisaiprasen.github.io
+DTSTAMP:20261027T202500Z
+DTSTART:20261114T023000Z
+SUMMARY:Haldi & Pellikoduku - Sai Prasen
+LOCATION:Our home\, Hayathnagar\, Hyderabad
+DESCRIPTION:14 November 2026\, 8 AM IST onwards.\n
+ Map: https://maps.app.goo.gl/VKzykD1AVG2seBgv8
+URL:https://thatisaiprasen.github.io/wedding-invite/
+END:VEVENT
+END:VCALENDAR

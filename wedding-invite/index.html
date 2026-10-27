@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#641f32">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3d0710">
   <title>Sai Prasen &amp; Thanusha | Wedding Invitation</title>
   <meta name="description" content="">
   <meta name="robots" content="max-image-preview:large">
@@ -25,86 +25,182 @@
   <meta name="twitter:description" content="">
   <meta name="twitter:image" content="https://thatisaiprasen.github.io/wedding-invite/invite.jpeg?v=2">
   <meta name="twitter:image:alt" content="Wedding invitation for Sai Prasen and Thanusha.">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Marcellus&amp;family=Noto+Serif+Telugu:wght@400;600&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="./assets/door.webp">
+  <link rel="preload" as="image" href="./assets/gopuram.webp">
+  <link rel="stylesheet" href="./styles.css?v=7">
+  <script src="./invitation.js?v=8" defer></script>
 </head>
 <body>
-  <svg class="ornament-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <defs>
-      <symbol id="botanical" viewBox="0 0 180 260">
-        <g fill="none" stroke="currentColor" stroke-width="1.2">
-          <path d="M22 248C95 183 49 90 155 14M50 210C82 170 116 171 157 137M69 163C47 123 31 106 18 84M87 111C122 100 146 80 165 49"/>
-          <path d="M48 219C8 205 15 177 20 163C42 172 53 187 48 219ZM64 191C92 193 111 173 116 154C88 153 68 167 64 191ZM70 164C37 159 29 136 30 119C56 124 72 141 70 164ZM74 137C96 136 112 121 116 103C94 104 80 117 74 137ZM91 104C68 93 66 73 70 57C91 67 98 85 91 104ZM110 72C133 73 150 58 154 42C131 43 118 54 110 72ZM131 42C114 29 120 12 128 3C143 17 141 31 131 42ZM108 173C109 150 127 136 145 134C144 157 130 170 108 173ZM140 150C158 153 174 145 179 131C160 128 148 136 140 150ZM49 137C22 135 12 117 12 102C34 105 49 119 49 137Z"/>
-        </g>
-      </symbol>
-      <symbol id="flourish" viewBox="0 0 220 32">
-        <g fill="none" stroke="currentColor" stroke-width="1">
-          <path d="M5 16H82M138 16H215M90 16L110 5L130 16L110 27Z"/>
-          <path d="M103 16L110 12L117 16L110 20Z"/>
-        </g>
-      </symbol>
-    </defs>
-  </svg>
-  <header class="masthead">
-    <a class="monogram" href="#invitation" aria-label="Sai Prasen and Thanusha invitation">S<span>&amp;</span>T</a>
-    <span class="masthead-label">A celebration of love</span>
-    <a class="masthead-link" href="#celebrations">The celebrations <span aria-hidden="true">&#8599;</span></a>
-  </header>
-  <main>
-    <section class="invitation" id="invitation" aria-labelledby="couple">
-      <div class="invitation-frame">
-        <svg class="botanical botanical-left" aria-hidden="true"><use href="#botanical"/></svg>
-        <svg class="botanical botanical-right" aria-hidden="true"><use href="#botanical"/></svg>
-        <p class="eyebrow">Together with our families</p>
-        <p class="invitation-intro">With full hearts, we invite you to celebrate</p>
-        <p class="eyebrow wedding-label">The wedding of</p>
-        <h1 id="couple">Sai Prasen <span class="ampersand">&amp;</span> Thanusha</h1>
-        <svg class="flourish" aria-hidden="true"><use href="#flourish"/></svg>
-        <p class="hero-date">15 <span>November</span> 2026</p>
-        <p class="hero-time">Sunday <span aria-hidden="true">&middot;</span> 9:14 PM</p>
-        <p class="hero-message">A new chapter. A lifetime of togetherness.<br>And the joy of having you by our side.</p>
-        <a class="celebrations-link" href="#celebrations">Explore the celebrations <span aria-hidden="true">&#8595;</span></a>
+  <section id="gate" role="dialog" aria-modal="true" aria-label="Invitation cover" hidden>
+    <div class="wrap">
+      <div class="door l" aria-hidden="true"><span class="img"></span></div>
+      <div class="door r" aria-hidden="true"><span class="img"></span></div>
+      <div class="gcopy">
+        <p class="tl">A sacred beginning</p>
+        <p class="script">You're invited</p>
+        <p class="caps">Sai Prasen <span class="amp">&amp;</span> Thanusha</p>
+        <p class="date">15 &middot; 11 &middot; 2026</p>
+        <button class="btn btn-gold" id="openBtn" type="button">Open Invitation</button>
+      </div>
+    </div>
+  </section>
+  <p id="assetStatus" role="status" hidden></p>
+  <p id="introStatus" role="status"></p>
+  <button class="btn btn-gold" id="skipIntro" type="button" hidden>Skip animation</button>
+  <main id="app">
+    <section class="scene" id="hero" aria-labelledby="coupleNames">
+      <div class="stage">
+        <div class="sky" id="hSky"></div>
+        <div class="layer cloud" data-dx="-60" style="left:-12%;top:31%;width:52%"><img src="./assets/cloud.webp" alt=""></div>
+        <div class="layer cloud flip" data-dx="70" style="right:-14%;top:40%;width:46%"><img src="./assets/cloud.webp" alt=""></div>
+        <div class="layer cloud flip" data-dx="-40" style="left:-4%;top:3%;width:34%"><img src="./assets/cloud.webp" alt=""></div>
+        <div class="layer cloud" data-dx="50" style="right:-6%;top:6%;width:30%"><img src="./assets/cloud.webp" alt=""></div>
+        <div class="h-names layer" id="hNames">
+          <p class="tl">A sacred beginning</p>
+          <h1 id="coupleNames" tabindex="-1"><span class="caps">Sai Prasen</span><span class="weds">weds</span><span class="caps">Thanusha</span></h1>
+        </div>
+        <div class="layer h-gopuram" id="hGop"><img src="./assets/gopuram.webp" alt=""></div>
+        <div class="layer h-tree l" id="treeL"><img src="./assets/tree.webp" alt=""></div>
+        <div class="layer h-tree r flip" id="treeR"><img src="./assets/tree.webp" alt=""></div>
+        <a class="h-hint" id="hHint" href="#invite" aria-label="Scroll or tap to play the invitation opening">Scroll to begin<i aria-hidden="true"></i></a>
+        <div class="h-flash" id="hFlash"></div>
       </div>
     </section>
-    <section class="celebrations" id="celebrations" aria-labelledby="celebrations-title">
-      <p class="eyebrow">Two beautiful occasions. One forever.</p>
-      <h2 id="celebrations-title">Come, celebrate with us</h2>
-      <p class="section-intro">Your presence will make these moments all the more special.</p>
-      <div class="event-grid">
-        <article class="event-card" aria-labelledby="wedding-title">
-          <span class="event-number" aria-hidden="true">01</span>
-          <p class="eyebrow">The beginning of forever</p>
-          <h3 id="wedding-title">Wedding</h3>
-          <svg class="event-flourish" aria-hidden="true"><use href="#flourish"/></svg>
-          <time datetime="2026-11-15T21:14">Sunday, 15 November 2026<span class="event-time">9:14 PM</span></time>
-          <div class="venue">
-            <!-- Replace this placeholder with the wedding venue and address. -->
-            <p class="venue-label">Venue</p>
-            <p>Venue details to follow</p>
+    <section class="scene" id="invite" aria-label="Our wedding invitation" tabindex="-1">
+      <div class="stage">
+        <div class="wall"></div>
+        <div class="pillar l"></div><div class="pillar r"></div>
+        <div class="arch-win" id="iWin">
+          <svg class="arch-top" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110 Z" fill="#fff4de"/><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110" fill="none" stroke="#c39236" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>
+          <div class="arch-body"></div>
+          <div class="inv-copy">
+            <img class="ln sym" src="./assets/symbol.webp" alt="Ganesha">
+            <p class="ln">With the blessings of our families</p>
+            <p class="ln">we invite you to celebrate the wedding of</p>
+            <p class="ln names">Sai Prasen<span class="amp">&amp;</span>Thanusha</p>
+            <div class="ln rule"></div>
+            <p class="ln when">Sunday, 15 November 2026</p>
           </div>
-          <p class="event-note">Witness the vows, share the joy,<br>and bless our new beginning.</p>
-        </article>
-        <article class="event-card" aria-labelledby="reception-title">
-          <span class="event-number" aria-hidden="true">02</span>
-          <p class="eyebrow">An evening of togetherness</p>
-          <h3 id="reception-title">Reception</h3>
-          <svg class="event-flourish" aria-hidden="true"><use href="#flourish"/></svg>
-          <time datetime="2026-11-18T19:00">Wednesday, 18 November 2026<span class="event-time">7:00 PM onwards</span></time>
-          <div class="venue">
-            <!-- Replace this placeholder with the reception venue and address. -->
-            <p class="venue-label">Venue</p>
-            <p>Venue details to follow</p>
-          </div>
-          <p class="event-note">An evening of laughter, love,<br>and memories to treasure.</p>
-        </article>
+        </div>
+        <div class="layer toran" id="toran"><img src="./assets/toran.webp" alt=""></div>
       </div>
     </section>
-    <section class="closing" aria-label="With love">
-      <svg class="flourish" aria-hidden="true"><use href="#flourish"/></svg>
-      <p>Some moments are made more beautiful<br>by the people we share them with.</p>
-      <span class="eyebrow">We can't wait to celebrate with you</span>
-      <p class="signature">Sai Prasen &amp; Thanusha</p>
+    <section id="events" aria-labelledby="eventsTitle">
+      <img class="lotus-band" src="./assets/lotus.webp" alt="">
+      <div class="ev-head rv"><h2 class="script" id="eventsTitle">On the following events</h2></div>
+      <!-- Calendar entries contain only the supplied start times; no end times were provided. -->
+      <div class="ev-list" id="evList">
+        <article class="ev rv" aria-labelledby="haldiGroomTitle">
+          <div class="ev-art" style="background-image:url('./assets/ev2.webp')"><h3 class="n" id="haldiGroomTitle">Haldi &amp; Pellikoduku</h3></div>
+          <div class="ev-body">
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-14T08:00:00+05:30">Saturday, 14 November 2026 &middot; 8:00 AM onwards</time></dd><dt>Where</dt><dd>Our home, Hayathnagar, Hyderabad</dd></dl>
+            <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/VKzykD1AVG2seBgv8" target="_blank" rel="noopener noreferrer" aria-label="Find the Haldi and Pellikoduku venue on Google Maps">Location</a><a class="calendar-link" href="./haldi-pellikoduku.ics" download>Add to calendar</a></div>
+          </div>
+        </article>
+        <article class="ev rv d1" aria-labelledby="haldiBrideTitle">
+          <div class="ev-art" style="background-image:url('./assets/ev2.webp')"><h3 class="n" id="haldiBrideTitle">Haldi &amp; Pellikuthuru</h3></div>
+          <div class="ev-body">
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-14T08:00:00+05:30">Saturday, 14 November 2026 &middot; 8:00 AM onwards</time></dd><dt>Where</dt><dd>Our home, Gajuwaka, Vizag</dd></dl>
+            <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/8yW2M1TQjnWPdXdL8" target="_blank" rel="noopener noreferrer" aria-label="Find the Haldi and Pellikuthuru venue on Google Maps">Location</a><a class="calendar-link" href="./haldi-pellikuthuru.ics" download>Add to calendar</a></div>
+          </div>
+        </article>
+        <article class="ev rv" aria-labelledby="weddingTitle">
+          <div class="ev-art" style="background-image:url('./assets/ev3.webp')"><h3 class="n" id="weddingTitle">Wedding</h3></div>
+          <div class="ev-body">
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-15T21:14:00+05:30">Sunday, 15 November 2026 &middot; 9:14 PM</time></dd><dt>Where</dt><dd>Adireddy Convention, BC Road, Gajuwaka, Vizag</dd></dl>
+            <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/zgmC9MAUiPSCgCKFA" target="_blank" rel="noopener noreferrer" aria-label="Find the wedding venue on Google Maps">Location</a><a class="calendar-link" href="./wedding.ics" download>Add to calendar</a></div>
+          </div>
+        </article>
+        <article class="ev rv d1" aria-labelledby="receptionTitle">
+          <div class="ev-art" style="background-image:url('./assets/ev4.webp')"><h3 class="n" id="receptionTitle">Reception &amp; Sangeet</h3></div>
+          <div class="ev-body">
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-18T19:00:00+05:30">Wednesday, 18 November 2026 &middot; 7:00 PM onwards</time></dd><dt>Where</dt><dd>Ananya Ecc Resorts, Hayathnagar, Hyderabad</dd></dl>
+            <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/f31ur6AessFnyoKE6" target="_blank" rel="noopener noreferrer" aria-label="Find the reception and sangeet venue on Google Maps">Location</a><a class="calendar-link" href="./reception-sangeet.ics" download>Add to calendar</a></div>
+          </div>
+        </article>
+      </div>
+      <p class="timezone-note">All times are in Indian Standard Time (IST).</p>
+      <svg class="cloud-edge" viewBox="0 0 400 70" aria-hidden="true"><rect width="400" height="70" fill="#7cc4f2"/><path d="M0,0 H400 V20 C380,44 350,40 336,30 C318,50 282,48 270,32 C250,52 214,50 204,30 C186,48 150,48 140,30 C120,50 86,46 76,28 C58,46 22,44 0,26 Z" fill="#fff4de"/></svg>
     </section>
+    <section class="scene" id="story" aria-label="A sacred beginning" tabindex="-1">
+      <div class="stage">
+        <div class="world" id="world">
+          <div class="w-sky"></div><div class="w-floor"></div>
+          <div class="layer s-cloud" style="left:-10%;top:4%;width:48%"><img src="./assets/cloud.webp" alt=""></div>
+          <div class="layer s-cloud flip" style="right:-12%;top:10%;width:44%"><img src="./assets/cloud.webp" alt=""></div>
+          <div class="layer s-cloud" style="left:32%;top:1%;width:28%"><img src="./assets/cloud.webp" alt=""></div>
+          <div class="layer s-back" style="left:-8%;top:31.5%;width:42%"><img src="./assets/sside.webp" alt=""></div>
+          <div class="layer s-back flip" style="right:-8%;top:31.5%;width:42%"><img src="./assets/sside.webp" alt=""></div>
+          <div class="layer" id="sMain" style="left:14%;top:19.5%;width:72%"><img src="./assets/sgopuram.webp" alt=""></div>
+          <div class="layer" id="sMandapam" style="left:-26%;top:46.5%;width:152%"><img src="./assets/mandapam.webp" alt=""></div>
+          <div class="layer" id="sCouple" style="left:29%;top:52.5%;width:42%"><img src="./assets/scouple.webp" alt=""></div>
+          <div class="layer" id="leafL" style="left:-14%;top:55%;width:40%"><img src="./assets/banana.webp" alt=""></div>
+          <div class="layer flip" id="leafR" style="right:-14%;top:55%;width:40%"><img src="./assets/banana.webp" alt=""></div>
+          <div class="layer" id="sLotus" style="left:-45%;width:190%;bottom:0"><img src="./assets/lotus.webp" alt=""></div>
+        </div>
+        <div class="st-cap one" id="cap1"><div class="pnl"><h2 class="script">Two families,</h2><p>A sacred beginning</p></div></div>
+        <div class="st-cap two" id="cap2"><div class="pnl"><h2 class="script">Muhurtham</h2><p>9:14 PM &middot; Sunday, 15 November 2026</p></div></div>
+        <div id="petals" aria-hidden="true"></div>
+      </div>
+    </section>
+    <section id="couple" class="maroon" aria-labelledby="meetTitle">
+      <div class="lantern l"><img src="./assets/lantern.webp" alt=""></div><div class="lantern r"><img src="./assets/lantern.webp" alt=""></div>
+      <h2 class="mt-head script rv" id="meetTitle">Meet the Bride &amp; Groom</h2>
+      <div class="m-arch">
+        <svg class="arch-top" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110 Z" fill="#fff4de"/><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110" fill="none" stroke="#f0c865" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>
+        <div class="arch-body">
+          <div class="gframe" id="frame"><a href="./invite.jpeg" class="gallery-open" aria-label="Open the full invitation picture"><img src="./invite.jpeg" width="1200" height="1600" loading="lazy" alt="Sai Prasen and Thanusha's wedding invitation"></a></div>
+          <div class="duo"><p class="caps">Thanusha</p><p class="caps">Sai Prasen</p></div>
+          <p class="m-sub">Together, with the blessings of our families</p>
+        </div>
+      </div>
+    </section>
+    <section id="venue" class="maroon" aria-labelledby="venueTitle">
+      <h2 class="script rv" id="venueTitle">Location</h2>
+      <p class="v-name rv d1">Adireddy Convention</p>
+      <p class="v-addr rv d1">BC Road, Gajuwaka, Vizag</p>
+      <a class="btn btn-gold rv d2" href="https://maps.app.goo.gl/zgmC9MAUiPSCgCKFA" target="_blank" rel="noopener noreferrer">Wedding location</a>
+      <p class="v-name rv venue-reception">Ananya Ecc Resorts</p>
+      <p class="v-addr rv d1">Hayathnagar, Hyderabad</p>
+      <a class="btn btn-gold rv d2" href="https://maps.app.goo.gl/f31ur6AessFnyoKE6" target="_blank" rel="noopener noreferrer">Reception location</a>
+      <img class="venue-gold" id="vGold" src="./assets/vgold.webp" alt="">
+    </section>
+    <section class="scene" id="rsvp" aria-labelledby="joinTitle">
+      <div class="stage">
+        <div class="bells" id="bells" aria-hidden="true"></div>
+        <div class="arch-win">
+          <svg class="arch-top" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110 Z" fill="#fff4de"/><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110" fill="none" stroke="#f0c865" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>
+          <div class="arch-body"></div>
+        </div>
+        <div class="rs-copy"><h2 class="r-ln script" id="joinTitle">Will you join us?</h2><p class="r-ln">Your presence and blessings will make our celebrations complete.</p></div>
+        <div class="valance"></div>
+        <div class="curtain l" id="curL"><div class="body"></div><div class="fr"></div></div>
+        <div class="curtain r" id="curR"><div class="body"></div><div class="fr"></div></div>
+      </div>
+    </section>
+    <section id="count" class="paper" aria-labelledby="countTitle">
+      <div class="emb" style="width:420px;left:-150px;top:-120px" aria-hidden="true"></div>
+      <h2 class="script rv" id="countTitle">The countdown begins</h2>
+      <div class="cd" id="cd" data-target="2026-11-15T21:14:00+05:30" hidden><div><b data-unit="days">00</b><span>Days</span></div><div><b data-unit="hours">00</b><span>Hrs</span></div><div><b data-unit="minutes">00</b><span>Min</span></div><div><b data-unit="seconds">00</b><span>Sec</span></div></div>
+      <p id="countStatus" role="status"></p>
+      <p class="cd-date">Sunday, 15 November 2026 &middot; 9:14 PM IST</p>
+      <a class="btn btn-maroon" id="calBtn" href="./wedding.ics" download>Add to calendar</a>
+    </section>
+    <section id="magic" class="paper" tabindex="0" role="region" aria-label="Invitation photo animation">
+      <div class="emb" style="width:460px;right:-190px;bottom:-140px" aria-hidden="true"></div>
+      <div class="mg-hint" id="mgHint"><h2 class="script">Our invitation</h2><p>Our celebrations, in a picture</p><span class="tap">Tap to animate</span></div>
+      <a class="photo-fallback gallery-open" href="./invite.jpeg">View invitation picture</a>
+    </section>
+    <footer><p class="script">Thank You</p><p>With love, Sai Prasen &amp; Thanusha</p><button class="replay" type="button" hidden>Open invitation again</button></footer>
+    <p class="powered">Design by <a href="https://afterfxtemplates.com" target="_blank" rel="noopener noreferrer">AfterFX Templates</a></p>
   </main>
-  <footer>With love, and the blessings of our families <span aria-hidden="true">&middot;</span> November 2026</footer>
+  <dialog class="photo-viewer" aria-label="Full invitation picture">
+    <button class="close-viewer" type="button" aria-label="Close invitation picture">Close &times;</button>
+    <img src="./invite.jpeg" width="1200" height="1600" alt="Full wedding invitation for Sai Prasen and Thanusha." loading="lazy">
+    <a href="./invite.jpeg" download>Download invitation picture</a>
+  </dialog>
 </body>
 </html>

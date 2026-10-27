@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Sai Prasen and Thanusha//Wedding Invitation//EN
+CALSCALE:GREGORIAN
+BEGIN:VEVENT
+UID:haldi-pellikuthuru-20261114@thatisaiprasen.github.io
+DTSTAMP:20261027T202500Z
+DTSTART:20261114T023000Z
+SUMMARY:Haldi & Pellikuthuru - Thanusha
+LOCATION:Our home\, Gajuwaka\, Vizag
+DESCRIPTION:14 November 2026\, 8 AM IST onwards.\n
+ Map: https://maps.app.goo.gl/8yW2M1TQjnWPdXdL8
+URL:https://thatisaiprasen.github.io/wedding-invite/
+END:VEVENT
+END:VCALENDAR

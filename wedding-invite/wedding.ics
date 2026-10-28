@@ -4,12 +4,12 @@ PRODID:-//Sai Prasen and Thanusha//Wedding Invitation//EN
 CALSCALE:GREGORIAN
 BEGIN:VEVENT
 UID:wedding-20261115@thatisaiprasen.github.io
-DTSTAMP:20261027T202500Z
-DTSTART:20261115T154400Z
+DTSTAMP:20261028T182741Z
+DTSTART:20261115T133000Z
 SUMMARY:Wedding - Sai Prasen & Thanusha
 LOCATION:Adireddy Convention\, BC Road\, Gajuwaka\, Vizag
-DESCRIPTION:Muhurtham: 15 November 2026\, 9:14 PM IST.\n
- Map: https://maps.app.goo.gl/zgmC9MAUiPSCgCKFA
+DESCRIPTION:Wedding: 15 November 2026\, 7:00 PM IST onwards.\n
+ Muhurtam: 9:14 PM IST.\nMap: https://maps.app.goo.gl/zgmC9MAUiPSCgCKFA
 URL:https://thatisaiprasen.github.io/wedding-invite/
 END:VEVENT
 END:VCALENDAR

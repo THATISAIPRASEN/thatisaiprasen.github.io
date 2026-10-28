@@ -107,40 +107,6 @@ registerScene('invite', invitationDuration, time => {
   });
 });
 
-const storyClouds = $$('#story .s-cloud');
-const storyBack = $$('#story .s-back');
-registerScene('story', 6.6, time => {
-  const travel = segment(time, 0, 6);
-  const coupleProgress = easeOut(segment(time, 2, 4.4));
-  transform($('#world'), `translateY(${-46 * travel}%)`);
-  storyClouds.forEach(cloud => transform(cloud, `translateY(${160 * travel}%)`));
-  storyBack.forEach(layer => transform(layer, `translateY(${14 * travel}%)`));
-  transform($('#sMain'), `translateY(${6 * travel}%) scale(${1 + 0.04 * travel})`);
-  transform($('#leafL'), `translateY(${-14 * travel}%) rotate(${-5 * travel}deg)`);
-  transform($('#leafR'), `translateY(${-14 * travel}%) rotate(${5 * travel}deg)`);
-  transform($('#sLotus'), `translateY(${-70 * travel}%)`);
-  transform($('#sCouple'), `translateY(${6 * (1 - coupleProgress)}%) scale(${0.9 + 0.1 * coupleProgress})`);
-  const firstIn = segment(time, 0.3, 1);
-  const firstOut = segment(time, 2.1, 2.7);
-  const secondIn = segment(time, 3.9, 4.6);
-  opacity($('#cap1'), firstIn * (1 - firstOut));
-  transform($('#cap1'), `translateY(${24 * (1 - firstIn) - 20 * firstOut}px)`);
-  opacity($('#cap2'), secondIn);
-  transform($('#cap2'), `translateY(${24 * (1 - secondIn)}px)`);
-});
-
-const curtainLines = $$('#rsvp .r-ln');
-registerScene('rsvp', 3.6, time => {
-  const opening = easeInOut(segment(time, 0.2, 2.2));
-  transform($('#curL'), `translateX(${-104 * opening}%)`);
-  transform($('#curR'), `translateX(${104 * opening}%)`);
-  curtainLines.forEach((line, index) => {
-    const progress = easeOut(segment(time, 1.4 + 0.25 * index, 1.9 + 0.25 * index));
-    opacity(line, progress);
-    transform(line, `translateY(${20 * (1 - progress)}px)`);
-  });
-});
-
 freeUpdates.push(height => {
   const photoFrame = $('#frame');
   if (photoFrame) {
@@ -203,8 +169,6 @@ let gateTimer;
 
 const hero = $('#hero');
 const invitation = $('#invite');
-const story = $('#story');
-const skipIntro = $('#skipIntro');
 const introStatus = $('#introStatus');
 const sequenceDuration = 3000;
 const introTiming = { temple: 1500, entrance: 200, card: 1300 };
@@ -225,20 +189,14 @@ function stopSequence() {
   introRequested = false;
   sequencePausedAt = null;
   lastScrollInput = { direction: 0, time: -Infinity };
-  skipIntro.hidden = true;
 }
 
-function sequenceBounds(sequence) {
-  const first = sequence === 'story' ? story : hero;
-  const last = sequence === 'story' ? story : invitation;
-  return { start: first.offsetTop, end: last.offsetTop + last.offsetHeight - window.innerHeight };
+function sequenceBounds() {
+  return { start: hero.offsetTop, end: invitation.offsetTop + invitation.offsetHeight - window.innerHeight };
 }
 
-function sequencePosition(sequence, time) {
-  const { start, end } = sequenceBounds(sequence);
-  if (sequence === 'story') {
-    return lerp(start, end, clamp(time / sequenceDuration));
-  }
+function sequencePosition(time) {
+  const { start, end } = sequenceBounds();
   const { temple, entrance, card } = introTiming;
   const heroEnd = hero.offsetTop + hero.offsetHeight - window.innerHeight;
   const cardStart = invitation.offsetTop;
@@ -251,11 +209,8 @@ function sequencePosition(sequence, time) {
   return lerp(cardStart, end, segment(time, temple + entrance, temple + entrance + card));
 }
 
-function sequenceTimeAtPosition(sequence, top) {
-  const { start, end } = sequenceBounds(sequence);
-  if (sequence === 'story') {
-    return sequenceDuration * segment(top, start, end);
-  }
+function sequenceTimeAtPosition(top) {
+  const { start, end } = sequenceBounds();
   const { temple, entrance, card } = introTiming;
   const heroEnd = hero.offsetTop + hero.offsetHeight - window.innerHeight;
   const cardStart = invitation.offsetTop;
@@ -271,17 +226,16 @@ function sequenceTimeAtPosition(sequence, top) {
 }
 
 function finishSequence() {
-  const sequence = activeSequence;
   const direction = sequenceDirection;
-  const bounds = sequenceBounds(sequence);
-  const destination = sequence === 'story' ? story : direction > 0 ? invitation : $('#coupleNames');
+  const bounds = sequenceBounds();
+  const destination = direction > 0 ? invitation : $('#coupleNames');
   stopSequence();
   window.scrollTo({ top: direction > 0 ? bounds.end : bounds.start, behavior: 'instant' });
   snap = true;
   requestDraw();
   destination.focus({ preventScroll: true });
-  introStatus.textContent = direction < 0 ? 'Returned to the temple entrance. Scroll to continue.' : sequence === 'story' ?
-    'Temple ceremony revealed. Scroll to continue.' : 'Invitation open. Scroll to see the celebrations.';
+  introStatus.textContent = direction < 0 ? 'Returned to the temple entrance. Scroll to continue.' :
+    'Invitation open. Scroll to see the celebrations.';
 }
 
 function nextSequence(direction = 1) {
@@ -291,15 +245,10 @@ function nextSequence(direction = 1) {
   if (!gate.hidden) {
     return direction > 0 ? 'intro' : null;
   }
-  for (const sequence of ['intro', 'story']) {
-    const { start, end } = sequenceBounds(sequence);
-    const entry = 0.15 * window.innerHeight;
-    if (direction > 0 ? window.scrollY >= start - entry && window.scrollY < end - 1 :
-      window.scrollY <= end + entry && window.scrollY > start + 1) {
-      return sequence;
-    }
-  }
-  return null;
+  const { start, end } = sequenceBounds();
+  const entry = 0.15 * window.innerHeight;
+  return (direction > 0 ? window.scrollY >= start - entry && window.scrollY < end - 1 :
+    window.scrollY <= end + entry && window.scrollY > start + 1) ? 'intro' : null;
 }
 
 function playSequence(sequence, direction = 1) {
@@ -314,16 +263,14 @@ function playSequence(sequence, direction = 1) {
     return;
   }
   // Use the same timeline in reverse, including its easing, without jumping on direction changes.
-  const startTime = sequenceTimeAtPosition(sequence, window.scrollY);
-  const startOffset = window.scrollY - sequencePosition(sequence, startTime);
+  const startTime = sequenceTimeAtPosition(window.scrollY);
+  const startOffset = window.scrollY - sequencePosition(startTime);
   activeSequence = sequence;
   sequenceDirection = direction;
   sequenceStartedAt = performance.now();
-  skipIntro.hidden = false;
   introStatus.textContent = direction < 0 ?
-    'Returning through the temple. Press Escape or Skip animation to return to its entrance.' : sequence === 'story' ?
-    'Playing the temple ceremony. Press Escape or Skip animation to view the final scene.' :
-    'Opening your invitation. Press Escape or Skip animation to view the full card.';
+    'Returning through the temple. Press Escape to return to its entrance.' :
+    'Opening your invitation. Press Escape to view the full card.';
 
   function advanceSequence(now) {
     if (sequencePausedAt === null) {
@@ -334,7 +281,7 @@ function playSequence(sequence, direction = 1) {
       }
       const progress = clamp(elapsed / sequenceDuration);
       const time = lerp(startTime, direction > 0 ? sequenceDuration : 0, progress);
-      const top = sequencePosition(sequence, time) + startOffset * (1 - progress);
+      const top = sequencePosition(time) + startOffset * (1 - progress);
       window.scrollTo({ top, behavior: 'instant' });
       snap = true;
       requestDraw();
@@ -393,17 +340,14 @@ window.addEventListener('scroll', () => {
     return;
   }
   // Catch a gesture crossing either boundary without requiring another scroll.
-  const order = direction > 0 ? ['intro', 'story'] : ['story', 'intro'];
-  for (const sequence of order) {
-    const bounds = sequenceBounds(sequence);
-    const boundary = direction > 0 ? bounds.start : bounds.end;
-    const crossed = direction > 0 ? previousY < boundary && lastScrollY >= boundary :
-      previousY > boundary && lastScrollY <= boundary;
-    if (crossed) {
-      window.scrollTo({ top: boundary, behavior: 'instant' });
-      playSequence(sequence, direction);
-      return;
-    }
+  const bounds = sequenceBounds();
+  const boundary = direction > 0 ? bounds.start : bounds.end;
+  const crossed = direction > 0 ? previousY < boundary && lastScrollY >= boundary :
+    previousY > boundary && lastScrollY <= boundary;
+  if (crossed) {
+    window.scrollTo({ top: boundary, behavior: 'instant' });
+    playSequence('intro', direction);
+    return;
   }
   playSequence(nextSequence(direction), direction);
 }, { passive: true });
@@ -444,7 +388,6 @@ $('#hHint').addEventListener('click', event => {
     playSequence('intro');
   }
 });
-skipIntro.addEventListener('click', finishSequence);
 document.addEventListener('visibilitychange', () => {
   if (activeSequence) {
     if (document.hidden) {
@@ -538,20 +481,6 @@ function mandala(color, rings) {
   return `<svg viewBox="-100 -100 200 200" width="100%" aria-hidden="true">${shapes}</svg>`;
 }
 $$('.emb').forEach(element => { element.innerHTML = mandala('#c9a36a', 7); });
-const bell = '<svg viewBox="0 0 22 70" aria-hidden="true"><line x1="11" y1="0" x2="11" y2="40" stroke="#d9a947" stroke-width="1.5"/><path d="M3,62 Q3,44 11,42 Q19,44 19,62 Z" fill="#e2b24e" stroke="#8a5a14"/><rect x="1" y="61" width="20" height="3" rx="1.5" fill="#a8741f"/><circle cx="11" cy="67" r="2.6" fill="#a8741f"/></svg>';
-$('#bells').innerHTML = bell.repeat(7);
-if (!reducedMotion.matches) {
-  const colors = ['#f39a1d', '#f7c531', '#e0302f', '#f29bb6'];
-  for (let index = 0; index < 16; index++) {
-    const petal = document.createElement('span');
-    petal.className = 'petal';
-    petal.style.left = `${100 * Math.random()}%`;
-    petal.style.background = colors[index % colors.length];
-    petal.style.animationDuration = `${6 + 6 * Math.random()}s`;
-    petal.style.animationDelay = `${-12 * Math.random()}s`;
-    $('#petals').appendChild(petal);
-  }
-}
 
 const countdown = $('#cd');
 const countStatus = $('#countStatus');
@@ -586,24 +515,41 @@ if (Number.isNaN(weddingTime)) {
 }
 
 const magic = $('#magic');
-const cards = Array.from({ length: 8 }, () => {
+const photoLinks = $$('#photoGallery .gallery-open');
+const photoImages = photoLinks.map(link => link.querySelector('img'));
+const cards = Array.from({ length: 8 }, (_, index) => {
   const card = document.createElement('div');
   card.className = 'pc';
   card.setAttribute('aria-hidden', 'true');
-  card.innerHTML = '<div class="ph"></div>';
+  const photo = document.createElement('div');
+  photo.className = 'ph';
+  const image = photoImages[index % photoImages.length].cloneNode();
+  image.alt = '';
+  photo.appendChild(image);
+  card.appendChild(photo);
   magic.appendChild(card);
   return card;
 });
 const photoTimers = new Set();
-let galleryCycle = 0;
+let magicVisible = false;
 
 function moveCard(card, x, y, angle, scale, duration, easing = 'ease') {
+  const width = magic.clientWidth;
+  const height = magic.clientHeight;
+  const cardWidth = card.offsetWidth;
+  const cardHeight = card.offsetHeight;
+  if (width > 0 && height > 0) {
+    // Reserve full-size rotated bounds, including between animation keyframes.
+    const inset = 20 + Math.hypot(cardWidth, cardHeight) / 2 * Math.max(1, scale);
+    x = clamp(x + cardWidth / 2, inset, width - inset) - cardWidth / 2;
+    y = clamp(y + cardHeight / 2, inset, height - inset) - cardHeight / 2;
+  }
   card.style.transition = duration && !reducedMotion.matches ? `transform ${duration}s ${easing}` : 'none';
   card.style.transform = `translate(${x}px,${y}px) rotate(${angle}deg) scale(${scale})`;
 }
 
 function stackPhotos() {
-  cards.forEach((card, index) => moveCard(card, magic.clientWidth / 2 - 48 + 6 * (index % 3 - 1), magic.clientHeight * 0.55 - 55 + 1.5 * index, 37 * index % 24 - 12, 1, 0));
+  cards.forEach((card, index) => moveCard(card, magic.clientWidth / 2 - card.offsetWidth / 2 + 6 * (index % 3 - 1), magic.clientHeight * 0.55 - card.offsetHeight / 2 + 1.5 * index, 37 * index % 24 - 12, 1, 0));
 }
 
 function animatePhotos(x, y) {
@@ -615,61 +561,96 @@ function animatePhotos(x, y) {
   opacity($('#mgHint'), 0.25);
   const width = magic.clientWidth;
   const height = magic.clientHeight;
-  cards.forEach(card => moveCard(card, x - 48, y - 55, 0, 0.2, 0));
+  const inset = 20 + Math.max(...cards.map(card => Math.hypot(card.offsetWidth, card.offsetHeight) / 2));
+  const availableWidth = Math.max(0, width - 2 * inset);
+  const availableHeight = Math.max(0, height - 2 * inset);
+  cards.forEach(card => moveCard(card, x - card.offsetWidth / 2, y - card.offsetHeight / 2, 0, 0.2, 0));
   // Commit the initial pose before starting the reference's scatter transition.
   magic.getBoundingClientRect();
   cards.forEach((card, index) => {
     photoTimers.add(window.setTimeout(() => {
-      moveCard(card, 10 + Math.random() * (width - 116), 20 + Math.random() * (height - 150), 60 * Math.random() - 30, 1, 0.7, 'cubic-bezier(.2,.8,.2,1)');
+      moveCard(card, inset + Math.random() * availableWidth - card.offsetWidth / 2, inset + Math.random() * availableHeight - card.offsetHeight / 2, 60 * Math.random() - 30, 1, 0.7, 'cubic-bezier(.2,.8,.2,1)');
     }, 30 * index));
   });
-  if (galleryCycle === 0) {
-    photoTimers.add(window.setTimeout(() => {
-      cards.forEach((card, index) => {
-        const angle = index / cards.length * Math.PI * 2;
-        const radius = Math.min(width, height) / 38;
-        const heartX = width / 2 + 16 * Math.pow(Math.sin(angle), 3) * radius - 48;
-        const heartY = 0.58 * height - (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) * radius - 56;
-        moveCard(card, heartX, heartY, 20 * Math.random() - 10, 1, 1.1, 'cubic-bezier(.65,0,.35,1)');
-      });
-    }, 1000));
-  }
-  galleryCycle = 1 - galleryCycle;
+  photoTimers.add(window.setTimeout(() => {
+    cards.forEach((card, index) => {
+      const angle = index / cards.length * Math.PI * 2;
+      const radius = Math.min(availableWidth / 32, availableHeight / 30);
+      const heartX = width / 2 + 16 * Math.pow(Math.sin(angle), 3) * radius - card.offsetWidth / 2;
+      const heartY = height / 2 - 2 * radius - (13 * Math.cos(angle) - 5 * Math.cos(2 * angle) - 2 * Math.cos(3 * angle) - Math.cos(4 * angle)) * radius - card.offsetHeight / 2;
+      moveCard(card, heartX, heartY, 20 * Math.random() - 10, 1, 1.1, 'cubic-bezier(.65,0,.35,1)');
+    });
+  }, 1000));
 }
-stackPhotos();
-magic.addEventListener('click', event => {
-  if (event.target.closest('a')) {
+
+function syncMagicVisibility(visible) {
+  const shouldPlay = visible && !reducedMotion.matches;
+  if (shouldPlay === magicVisible) {
     return;
   }
-  const bounds = magic.getBoundingClientRect();
-  animatePhotos(event.clientX - bounds.left, event.clientY - bounds.top);
-});
-magic.addEventListener('keydown', event => {
-  if ((event.key === 'Enter' || event.key === ' ') && event.target === magic) {
-    event.preventDefault();
+  magicVisible = shouldPlay;
+  if (shouldPlay) {
     animatePhotos(magic.clientWidth / 2, magic.clientHeight / 2);
+  } else {
+    photoTimers.forEach(timer => window.clearTimeout(timer));
+    photoTimers.clear();
+    opacity($('#mgHint'), 1);
+    stackPhotos();
   }
-});
-window.addEventListener('resize', () => {
+}
+
+function checkMagicVisibility() {
+  const bounds = magic.getBoundingClientRect();
+  const visibleHeight = Math.min(bounds.bottom, window.innerHeight) - Math.max(bounds.top, 0);
+  syncMagicVisibility(bounds.height > 0 && visibleHeight >= 0.25 * bounds.height);
+}
+
+function resetPhotos() {
   photoTimers.forEach(timer => window.clearTimeout(timer));
   photoTimers.clear();
   stackPhotos();
-});
-reducedMotion.addEventListener('change', () => {
-  photoTimers.forEach(timer => window.clearTimeout(timer));
-  photoTimers.clear();
-  stackPhotos();
-});
+  magicVisible = false;
+  checkMagicVisibility();
+}
+
+stackPhotos();
+if ('IntersectionObserver' in window) {
+  const photoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => syncMagicVisibility(entry.isIntersecting && entry.intersectionRatio >= 0.25));
+  }, { threshold: [0, 0.25] });
+  photoObserver.observe(magic);
+} else {
+  window.addEventListener('scroll', checkMagicVisibility, { passive: true });
+  checkMagicVisibility();
+}
+window.addEventListener('resize', resetPhotos);
+reducedMotion.addEventListener('change', resetPhotos);
 
 const viewer = $('.photo-viewer');
+const viewerImage = viewer.querySelector('img');
+const viewerDownload = viewer.querySelector('a');
 let viewerTrigger;
 if (typeof viewer.showModal === 'function') {
-  $$('.gallery-open').forEach(link => link.addEventListener('click', event => {
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a.gallery-open');
+    if (!link || event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
     event.preventDefault();
     viewerTrigger = link;
+    const sourceImage = link.querySelector('img') || photoLinks.find(photo => photo.href === link.href)?.querySelector('img');
+    const isInvitation = new URL(link.href).pathname === new URL('./invite.jpeg', window.location.href).pathname;
+    viewer.setAttribute('aria-label', isInvitation ? 'Full invitation picture' : 'Full-size couple photo');
+    viewerImage.src = link.href;
+    viewerImage.alt = sourceImage ? sourceImage.alt : 'Full wedding invitation for Sai Prasen and Thanusha.';
+    viewerImage.loading = 'eager';
+    viewerImage.removeAttribute('width');
+    viewerImage.removeAttribute('height');
+    viewerDownload.href = link.href;
+    viewerDownload.textContent = isInvitation ? 'Download invitation picture' : 'Download photo';
     viewer.showModal();
     document.body.classList.add('viewer-active');
-  }));
+  });
   $('.close-viewer').addEventListener('click', () => viewer.close());
   viewer.addEventListener('keydown', event => {
     if (event.key === 'Escape') {
@@ -704,7 +685,7 @@ $$('img').forEach(image => {
     reportAssetError(image.src);
   }
 });
-['door', 'sky', 'pillar', 'floor', 'curtain', 'ev2', 'ev3', 'ev4'].forEach(name => {
+['door', 'sky', 'pillar', 'ev2'].forEach(name => {
   const image = new Image();
   image.onerror = () => reportAssetError(image.src);
   image.src = `./assets/${name}.webp`;

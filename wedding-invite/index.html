@@ -30,8 +30,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Marcellus&amp;family=Noto+Serif+Telugu:wght@400;600&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="./assets/door.webp">
   <link rel="preload" as="image" href="./assets/gopuram.webp">
-  <link rel="stylesheet" href="./styles.css?v=7">
-  <script src="./invitation.js?v=8" defer></script>
+  <link rel="stylesheet" href="./styles.css?v=12">
+  <script src="./vendor/page-flip-2.0.7.browser.js" defer></script>
+  <script src="./invitation.js?v=12" defer></script>
+  <script src="./photo-album.js?v=2" defer></script>
 </head>
 <body>
   <section id="gate" role="dialog" aria-modal="true" aria-label="Invitation cover" hidden>
@@ -49,7 +51,6 @@
   </section>
   <p id="assetStatus" role="status" hidden></p>
   <p id="introStatus" role="status"></p>
-  <button class="btn btn-gold" id="skipIntro" type="button" hidden>Skip animation</button>
   <main id="app">
     <section class="scene" id="hero" aria-labelledby="coupleNames">
       <div class="stage">
@@ -90,9 +91,16 @@
     </section>
     <section id="events" aria-labelledby="eventsTitle">
       <img class="lotus-band" src="./assets/lotus.webp" alt="">
-      <div class="ev-head rv"><h2 class="script" id="eventsTitle">On the following events</h2></div>
-      <!-- Calendar entries contain only the supplied start times; no end times were provided. -->
+      <div class="ev-head rv"><h2 class="script" id="eventsTitle">Our celebrations</h2></div>
+      <!-- Calendar downloads use supplied dates/times only; no engagement time was provided. -->
       <div class="ev-list" id="evList">
+        <article class="ev rv" aria-labelledby="engagementTitle">
+          <a class="ev-art ev-photo gallery-open" href="./assets/Engagement.jpeg" style="background-image:url('./assets/Engagement.jpeg')" aria-label="Open our engagement photo"><h3 class="n" id="engagementTitle">Engagement</h3></a>
+          <div class="ev-body">
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-10-12">Monday, 12 October 2026</time></dd><dt>Where</dt><dd>Our Home, Gajuwaka, Vizag</dd></dl>
+            <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/8yW2M1TQjnWPdXdL8" target="_blank" rel="noopener noreferrer" aria-label="Find the engagement venue on Google Maps">Location</a><a class="calendar-link" href="./engagement.ics" download>Add to calendar</a></div>
+          </div>
+        </article>
         <article class="ev rv" aria-labelledby="haldiGroomTitle">
           <div class="ev-art" style="background-image:url('./assets/ev2.webp')"><h3 class="n" id="haldiGroomTitle">Haldi &amp; Pellikoduku</h3></div>
           <div class="ev-body">
@@ -108,43 +116,21 @@
           </div>
         </article>
         <article class="ev rv" aria-labelledby="weddingTitle">
-          <div class="ev-art" style="background-image:url('./assets/ev3.webp')"><h3 class="n" id="weddingTitle">Wedding</h3></div>
+          <a class="ev-art ev-photo gallery-open" href="./assets/Wedding.jpeg" style="background-image:url('./assets/Wedding.jpeg')" aria-label="Open our wedding portrait"><h3 class="n" id="weddingTitle">Wedding</h3></a>
           <div class="ev-body">
-            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-15T21:14:00+05:30">Sunday, 15 November 2026 &middot; 9:14 PM</time></dd><dt>Where</dt><dd>Adireddy Convention, BC Road, Gajuwaka, Vizag</dd></dl>
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-15T19:00:00+05:30">Sunday, 15 November 2026 &middot; 7:00 PM onwards</time></dd><dt>Muhurtam</dt><dd><time datetime="2026-11-15T21:14:00+05:30">9:14 PM</time></dd><dt>Where</dt><dd>Adireddy Convention, BC Road, Gajuwaka, Vizag</dd></dl>
             <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/zgmC9MAUiPSCgCKFA" target="_blank" rel="noopener noreferrer" aria-label="Find the wedding venue on Google Maps">Location</a><a class="calendar-link" href="./wedding.ics" download>Add to calendar</a></div>
           </div>
         </article>
         <article class="ev rv d1" aria-labelledby="receptionTitle">
-          <div class="ev-art" style="background-image:url('./assets/ev4.webp')"><h3 class="n" id="receptionTitle">Reception &amp; Sangeet</h3></div>
+          <a class="ev-art ev-photo gallery-open" href="./assets/Reception.jpeg" style="background-image:url('./assets/Reception.jpeg')" aria-label="Open our reception portrait"><h3 class="n" id="receptionTitle">Reception &amp; Sangeet</h3></a>
           <div class="ev-body">
-            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-18T19:00:00+05:30">Wednesday, 18 November 2026 &middot; 7:00 PM onwards</time></dd><dt>Where</dt><dd>Ananya Ecc Resorts, Hayathnagar, Hyderabad</dd></dl>
+            <dl class="ev-meta"><dt>When</dt><dd><time datetime="2026-11-18T19:00:00+05:30">Wednesday, 18 November 2026 &middot; 7:00 PM onwards</time></dd><dt>Where</dt><dd>Ananya Eco Resorts, Hayathnagar, Hyderabad</dd></dl>
             <div class="ev-actions"><a class="btn btn-maroon" href="https://maps.app.goo.gl/f31ur6AessFnyoKE6" target="_blank" rel="noopener noreferrer" aria-label="Find the reception and sangeet venue on Google Maps">Location</a><a class="calendar-link" href="./reception-sangeet.ics" download>Add to calendar</a></div>
           </div>
         </article>
       </div>
       <p class="timezone-note">All times are in Indian Standard Time (IST).</p>
-      <svg class="cloud-edge" viewBox="0 0 400 70" aria-hidden="true"><rect width="400" height="70" fill="#7cc4f2"/><path d="M0,0 H400 V20 C380,44 350,40 336,30 C318,50 282,48 270,32 C250,52 214,50 204,30 C186,48 150,48 140,30 C120,50 86,46 76,28 C58,46 22,44 0,26 Z" fill="#fff4de"/></svg>
-    </section>
-    <section class="scene" id="story" aria-label="A sacred beginning" tabindex="-1">
-      <div class="stage">
-        <div class="world" id="world">
-          <div class="w-sky"></div><div class="w-floor"></div>
-          <div class="layer s-cloud" style="left:-10%;top:4%;width:48%"><img src="./assets/cloud.webp" alt=""></div>
-          <div class="layer s-cloud flip" style="right:-12%;top:10%;width:44%"><img src="./assets/cloud.webp" alt=""></div>
-          <div class="layer s-cloud" style="left:32%;top:1%;width:28%"><img src="./assets/cloud.webp" alt=""></div>
-          <div class="layer s-back" style="left:-8%;top:31.5%;width:42%"><img src="./assets/sside.webp" alt=""></div>
-          <div class="layer s-back flip" style="right:-8%;top:31.5%;width:42%"><img src="./assets/sside.webp" alt=""></div>
-          <div class="layer" id="sMain" style="left:14%;top:19.5%;width:72%"><img src="./assets/sgopuram.webp" alt=""></div>
-          <div class="layer" id="sMandapam" style="left:-26%;top:46.5%;width:152%"><img src="./assets/mandapam.webp" alt=""></div>
-          <div class="layer" id="sCouple" style="left:29%;top:52.5%;width:42%"><img src="./assets/scouple.webp" alt=""></div>
-          <div class="layer" id="leafL" style="left:-14%;top:55%;width:40%"><img src="./assets/banana.webp" alt=""></div>
-          <div class="layer flip" id="leafR" style="right:-14%;top:55%;width:40%"><img src="./assets/banana.webp" alt=""></div>
-          <div class="layer" id="sLotus" style="left:-45%;width:190%;bottom:0"><img src="./assets/lotus.webp" alt=""></div>
-        </div>
-        <div class="st-cap one" id="cap1"><div class="pnl"><h2 class="script">Two families,</h2><p>A sacred beginning</p></div></div>
-        <div class="st-cap two" id="cap2"><div class="pnl"><h2 class="script">Muhurtham</h2><p>9:14 PM &middot; Sunday, 15 November 2026</p></div></div>
-        <div id="petals" aria-hidden="true"></div>
-      </div>
     </section>
     <section id="couple" class="maroon" aria-labelledby="meetTitle">
       <div class="lantern l"><img src="./assets/lantern.webp" alt=""></div><div class="lantern r"><img src="./assets/lantern.webp" alt=""></div>
@@ -152,7 +138,7 @@
       <div class="m-arch">
         <svg class="arch-top" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110 Z" fill="#fff4de"/><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110" fill="none" stroke="#f0c865" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>
         <div class="arch-body">
-          <div class="gframe" id="frame"><a href="./invite.jpeg" class="gallery-open" aria-label="Open the full invitation picture"><img src="./invite.jpeg" width="1200" height="1600" loading="lazy" alt="Sai Prasen and Thanusha's wedding invitation"></a></div>
+          <div class="gframe" id="frame"><a href="./assets/couple-image.jpeg" class="gallery-open" aria-label="Open our couple photo"><img src="./assets/couple-image.jpeg" width="961" height="1280" loading="lazy" alt="Sai Prasen and Thanusha together under an umbrella."></a></div>
           <div class="duo"><p class="caps">Thanusha</p><p class="caps">Sai Prasen</p></div>
           <p class="m-sub">Together, with the blessings of our families</p>
         </div>
@@ -163,39 +149,45 @@
       <p class="v-name rv d1">Adireddy Convention</p>
       <p class="v-addr rv d1">BC Road, Gajuwaka, Vizag</p>
       <a class="btn btn-gold rv d2" href="https://maps.app.goo.gl/zgmC9MAUiPSCgCKFA" target="_blank" rel="noopener noreferrer">Wedding location</a>
-      <p class="v-name rv venue-reception">Ananya Ecc Resorts</p>
+      <p class="v-name rv venue-reception">Ananya Eco Resorts</p>
       <p class="v-addr rv d1">Hayathnagar, Hyderabad</p>
       <a class="btn btn-gold rv d2" href="https://maps.app.goo.gl/f31ur6AessFnyoKE6" target="_blank" rel="noopener noreferrer">Reception location</a>
       <img class="venue-gold" id="vGold" src="./assets/vgold.webp" alt="">
-    </section>
-    <section class="scene" id="rsvp" aria-labelledby="joinTitle">
-      <div class="stage">
-        <div class="bells" id="bells" aria-hidden="true"></div>
-        <div class="arch-win">
-          <svg class="arch-top" viewBox="0 0 300 110" preserveAspectRatio="none" aria-hidden="true"><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110 Z" fill="#fff4de"/><path d="M0,110 L0,72 C0,56 12,48 28,48 C34,30 50,24 66,26 C76,12 96,8 110,14 C122,6 136,4 150,4 C164,4 178,6 190,14 C204,8 224,12 234,26 C250,24 266,30 272,48 C288,48 300,56 300,72 L300,110" fill="none" stroke="#f0c865" stroke-width="4" vector-effect="non-scaling-stroke"/></svg>
-          <div class="arch-body"></div>
-        </div>
-        <div class="rs-copy"><h2 class="r-ln script" id="joinTitle">Will you join us?</h2><p class="r-ln">Your presence and blessings will make our celebrations complete.</p></div>
-        <div class="valance"></div>
-        <div class="curtain l" id="curL"><div class="body"></div><div class="fr"></div></div>
-        <div class="curtain r" id="curR"><div class="body"></div><div class="fr"></div></div>
-      </div>
     </section>
     <section id="count" class="paper" aria-labelledby="countTitle">
       <div class="emb" style="width:420px;left:-150px;top:-120px" aria-hidden="true"></div>
       <h2 class="script rv" id="countTitle">The countdown begins</h2>
       <div class="cd" id="cd" data-target="2026-11-15T21:14:00+05:30" hidden><div><b data-unit="days">00</b><span>Days</span></div><div><b data-unit="hours">00</b><span>Hrs</span></div><div><b data-unit="minutes">00</b><span>Min</span></div><div><b data-unit="seconds">00</b><span>Sec</span></div></div>
       <p id="countStatus" role="status"></p>
-      <p class="cd-date">Sunday, 15 November 2026 &middot; 9:14 PM IST</p>
+      <p class="cd-date">Muhurtam: Sunday, 15 November 2026 &middot; 9:14 PM IST</p>
       <a class="btn btn-maroon" id="calBtn" href="./wedding.ics" download>Add to calendar</a>
     </section>
-    <section id="magic" class="paper" tabindex="0" role="region" aria-label="Invitation photo animation">
-      <div class="emb" style="width:460px;right:-190px;bottom:-140px" aria-hidden="true"></div>
-      <div class="mg-hint" id="mgHint"><h2 class="script">Our invitation</h2><p>Our celebrations, in a picture</p><span class="tap">Tap to animate</span></div>
-      <a class="photo-fallback gallery-open" href="./invite.jpeg">View invitation picture</a>
+    <section id="photos" class="paper" aria-labelledby="photosTitle">
+      <h2 class="script photos-title" id="photosTitle">Our moments</h2>
+      <div id="magic" class="paper" aria-hidden="true">
+        <div class="emb" style="width:460px;right:-190px;bottom:-140px" aria-hidden="true"></div>
+        <div class="mg-hint" id="mgHint"><p>A little collection of us</p></div>
+      </div>
+      <p class="album-error" id="albumError" role="status" hidden></p>
+      <div class="album-shell" id="albumShell" hidden>
+        <div class="album-stage" id="albumStage"></div>
+        <div class="album-controls" aria-label="Photo album navigation">
+          <button class="album-arrow" id="albumPrev" type="button" aria-label="Previous album page" aria-controls="photoBook" disabled>&larr;</button>
+          <p id="albumPage" role="status" aria-live="polite" aria-atomic="true"></p>
+          <button class="album-arrow" id="albumNext" type="button" aria-label="Next album page" aria-controls="photoBook" disabled>&rarr;</button>
+        </div>
+        <p class="album-hint" id="albumHint">Turn the cover to begin. Swipe, turn a corner, or use the arrow keys.</p>
+      </div>
+      <div class="photo-grid" id="photoGallery">
+        <a class="gallery-open" href="./assets/couple-image-2.jpeg" aria-label="Open our cafe photo"><img src="./assets/couple-image-2.jpeg" width="1280" height="960" loading="lazy" alt="Sai Prasen and Thanusha smiling across a cafe table."></a>
+        <a class="gallery-open" href="./assets/couple-image.jpeg" aria-label="Open our outdoor couple photo"><img src="./assets/couple-image.jpeg" width="961" height="1280" loading="lazy" alt="Sai Prasen and Thanusha together under an umbrella."></a>
+        <a class="gallery-open" href="./assets/Engagement.jpeg" aria-label="Open our engagement photo"><img src="./assets/Engagement.jpeg" width="699" height="1017" loading="lazy" alt="Sai Prasen and Thanusha celebrating their engagement."></a>
+        <a class="gallery-open" href="./assets/Wedding.jpeg" aria-label="Open our wedding portrait"><img src="./assets/Wedding.jpeg" width="1086" height="1448" loading="lazy" alt="Sai Prasen and Thanusha in traditional outfits beside a temple."></a>
+        <a class="gallery-open" href="./assets/Reception.jpeg" aria-label="Open our reception portrait"><img src="./assets/Reception.jpeg" width="597" height="1280" loading="lazy" alt="Sai Prasen and Thanusha holding hands beside the water."></a>
+      </div>
+      <a class="invitation-picture gallery-open" href="./invite.jpeg">View invitation picture</a>
     </section>
     <footer><p class="script">Thank You</p><p>With love, Sai Prasen &amp; Thanusha</p><button class="replay" type="button" hidden>Open invitation again</button></footer>
-    <p class="powered">Design by <a href="https://afterfxtemplates.com" target="_blank" rel="noopener noreferrer">AfterFX Templates</a></p>
   </main>
   <dialog class="photo-viewer" aria-label="Full invitation picture">
     <button class="close-viewer" type="button" aria-label="Close invitation picture">Close &times;</button>
